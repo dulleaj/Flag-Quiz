@@ -65,6 +65,8 @@
     self.startButton.hidden = NO;
     self.highScoreLabel.hidden = NO;
     
+    self.title = @"Flag Quiz";
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults]; //Read High Score
     
     self.theHighScore = (int)[defaults integerForKey:@"HighScore"];
