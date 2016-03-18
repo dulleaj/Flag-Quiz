@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Flag : NSObject
+@interface Flag : NSObject;
+
+@property NSString *country;
+
+@property NSString *emoji;
+
+@property NSString *capital;
+
+- (void) assignCountry;
 
 @end

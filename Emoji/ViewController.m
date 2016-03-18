@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "Flag.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *emojiLabel;
@@ -40,6 +41,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *highScoreLabel;
 @property int theHighScore;
 
+@property Flag *flagObject;
+
+@property NSMutableArray *incorrectAnswers;
+
 @end
 
 @implementation ViewController
@@ -47,6 +52,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.incorrectAnswers = [[NSMutableArray alloc] init];
     
     self.emojiLabel.hidden = YES;
     self.answerLabel.hidden = YES;
@@ -90,16 +97,18 @@
     self.timerLabel.text = [NSString stringWithFormat:@"%d",self.timerSeconds];
     
     self.userAnswer = self.answerLabel.text;
-    
-    NSString *countryWithSpace = [NSString stringWithFormat:@"%@ ",self.answer];
+    //Fix Me everything between here and if statement should be in Flag class
+    NSString *countryWithSpace = [NSString stringWithFormat:@"%@ ",self.flagObject.country];
     
     NSString *lowerUserAnswer = [self.userAnswer lowercaseString];
     
-    NSString *lowerAnswer = [self.answer lowercaseString];
+    NSString *lowerAnswer = [self.flagObject.country lowercaseString];
     
     NSString *lowerCountryWithSpace = [countryWithSpace lowercaseString];
-    
-    if ([lowerAnswer isEqualToString: lowerUserAnswer] || [lowerAnswer isEqualToString:lowerCountryWithSpace]) {
+
+    NSString *lowerUserAnswerWithSpace = [NSString stringWithFormat:@"%@ ",lowerUserAnswer];
+
+    if ([lowerAnswer isEqualToString: lowerUserAnswer] || [lowerUserAnswerWithSpace isEqualToString:lowerCountryWithSpace]) {
         
         self.streak += 1;
         
@@ -112,6 +121,13 @@
         [self askQuestion];
         
     } else {
+        
+        [self.incorrectAnswers addObject:self.flagObject];
+        
+        for (Flag *lower in self.incorrectAnswers){
+            NSLog(@"Country = %@",lower.country);
+            NSLog(@"Emoji = %@",lower.emoji);
+        }
         
         if (self.streak > self.theHighScore) {
             
@@ -145,135 +161,12 @@
 
 - (void) askQuestion {
     
-    if (self.streak < 11) {
-        
-        self.emojiInt = arc4random_uniform(11);
-        
-    }else if (self.streak > 11) {
-        
-        self.emojiInt = arc4random_uniform(12)+10;
-        
-    }
+    self.flagObject = [[Flag alloc] init];
     
-    if (self.emojiInt == 0) {
-        
-        self.emojiLabel.text = @"🇩🇪";//Germany
-        self.answer = @"GERMANY";
-        
-    }else if (self.emojiInt == 1) {
-        
-        self.emojiLabel.text = @"🇫🇷";//France
-        self.answer = @"FRANCE";
-        
-    }else if (self.emojiInt == 2) {
-        
-        self.emojiLabel.text = @"🇨🇭";//Switzerland
-        self.answer = @"SWITZERLAND";
-        
-    }else if (self.emojiInt == 3) {
-        
-        self.emojiLabel.text = @"🇧🇷";//Brazil
-        self.answer = @"BRAZIL";
+    [self.flagObject assignCountry];
     
-    }else if (self.emojiInt == 4) {
-        
-        self.emojiLabel.text = @"🇬🇷";//Greece
-        self.answer = @"GREECE";
+    self.emojiLabel.text = self.flagObject.emoji;
     
-    }else if (self.emojiInt == 5) {
-        
-        self.emojiLabel.text = @"🇧🇪";//Belgium
-        self.answer = @"BELGIUM";
-    }else if (self.emojiInt == 6) {
-        
-        self.emojiLabel.text = @"🇯🇵";//Japan
-        self.answer = @"JAPAN";
-    }else if (self.emojiInt == 7) {
-        
-        self.emojiLabel.text = @"🇳🇱";//Netherlands
-        self.answer = @"NETHERLANDS";
-    }else if (self.emojiInt == 8) {
-        
-        self.emojiLabel.text = @"🇦🇺";//Australia
-        self.answer = @"AUSTRALIA";
-    }else if (self.emojiInt == 9) {
-        
-        self.emojiLabel.text = @"🇨🇦";//Canada
-        self.answer = @"CANADA";
-    }else if (self.emojiInt == 10) {
-        
-        self.emojiLabel.text = @"🇺🇸";//United States of America
-        self.answer = @"USA";
-    
-    }else if (self.emojiInt == 11) {
-        
-        self.emojiLabel.text = @"🇮🇹";//Italy
-        self.answer = @"ITALY";
-        
-    }else if (self.emojiInt == 12) {
-        
-        self.emojiLabel.text = @"🇵🇪";//Peru
-        self.answer = @"PERU";
-        
-    }else if (self.emojiInt == 13) {
-        
-        self.emojiLabel.text = @"🇹🇷";//Turkey
-        self.answer = @"TURKEY";
-        
-    }else if (self.emojiInt == 14) {
-        
-        self.emojiLabel.text = @"🇳🇴";//Norway
-        self.answer = @"NORWAY";
-        
-    }else if (self.emojiInt == 15) {
-        
-        self.emojiLabel.text = @"🇨🇱";//Chile
-        self.answer = @"CHILE";
-        
-    }else if (self.emojiInt == 16) {
-        
-        self.emojiLabel.text = @"🇩🇰";//Denmark
-        self.answer = @"DENMARK";
-        
-    }else if (self.emojiInt == 17) {
-        
-        self.emojiLabel.text = @"🇨🇳";//China
-        self.answer = @"CHINA";
-        
-    }else if (self.emojiInt == 18) {
-        
-        self.emojiLabel.text = @"🇨🇺";//Cuba
-        self.answer = @"CUBA";
-        
-    }else if (self.emojiInt == 19) {
-        
-        self.emojiLabel.text = @"🇫🇮";//Finland
-        self.answer = @"FINLAND";
-        
-    }else if (self.emojiInt == 20) {
-        
-        self.emojiLabel.text = @"🇬🇪";//Georgia
-        self.answer = @"GEORGIA";
-        
-    }else if (self.emojiInt == 21) {
-        
-        self.emojiLabel.text = @"🇲🇽";//Mexico
-        self.answer = @"MEXICO";
-        
-    }
-    
-    if (self.streak >=5) {
-        
-        self.streakLabel.hidden = NO;
-        
-        self.streakLabel.text = [NSString stringWithFormat:@"Streak: %d",self.streak];
-        
-    } else if (self.streak < 5) {
-        
-        self.streakLabel.hidden = YES;
-        
-    }
-
     self.emojiLabel.hidden = NO;
     self.answerLabel.hidden = NO;
     self.timerLabel.hidden = NO;
@@ -298,7 +191,6 @@
     self.timerSeconds -= 1;
 
     self.timerLabel.text = [NSString stringWithFormat:@"%d",self.timerSeconds];
-    NSLog(@"%d",self.timerSeconds);
     
     if (self.timerSeconds <= 0) {
         
@@ -329,6 +221,8 @@
     }
 
 }
+// create a new app - have it ask 5 traveling questions (random questions, 1-5). All 5 questions should have 4 options, with 1 correct answer. WHen they click the button, tell them if they were wrong or right. Store it if it's wrong. Then - have another button that is "Help", which, when clicked, will tell them which question they've gotten wrong. Will need a custom class for each question, will want question to store and present everything, and use an array to store questions. Also - on the top left of screen, have a running percentage of how many questions they've gotten correct.
+
 
 
 @end

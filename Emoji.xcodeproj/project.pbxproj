@@ -13,6 +13,7 @@
 		2A7B66661C868821007DBE6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7B66641C868821007DBE6A /* Main.storyboard */; };
 		2A7B66681C868821007DBE6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A7B66671C868821007DBE6A /* Assets.xcassets */; };
 		2A7B666B1C868821007DBE6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7B66691C868821007DBE6A /* LaunchScreen.storyboard */; };
+		2ADCF9AD1C8F93D400F7E820 /* Flag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ADCF9AC1C8F93D400F7E820 /* Flag.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		2A7B66671C868821007DBE6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A7B666A1C868821007DBE6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A7B666C1C868821007DBE6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2ADCF9AB1C8F93D400F7E820 /* Flag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flag.h; sourceTree = "<group>"; };
+		2ADCF9AC1C8F93D400F7E820 /* Flag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flag.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 				2A7B665F1C868821007DBE6A /* AppDelegate.m */,
 				2A7B66611C868821007DBE6A /* ViewController.h */,
 				2A7B66621C868821007DBE6A /* ViewController.m */,
+				2ADCF9AB1C8F93D400F7E820 /* Flag.h */,
+				2ADCF9AC1C8F93D400F7E820 /* Flag.m */,
 				2A7B66641C868821007DBE6A /* Main.storyboard */,
 				2A7B66671C868821007DBE6A /* Assets.xcassets */,
 				2A7B66691C868821007DBE6A /* LaunchScreen.storyboard */,
@@ -153,6 +158,7 @@
 				2A7B66631C868821007DBE6A /* ViewController.m in Sources */,
 				2A7B66601C868821007DBE6A /* AppDelegate.m in Sources */,
 				2A7B665D1C868821007DBE6A /* main.m in Sources */,
+				2ADCF9AD1C8F93D400F7E820 /* Flag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
