@@ -13,3 +13,4 @@ Comparing Strings, NSUserDefault, NSTimer, Incorporating Emojis into Apps , Usin
 
 My Struggles:
 
+Implementing a timer, invalidating the timer and creating a new one after each incorrectly answered question or after countdown reaches 0.
