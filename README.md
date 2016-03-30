@@ -13,3 +13,4 @@ Comparing Strings, NSUserDefault, NSTimer, Incorporating Emojis into Apps , Usin
 
 My Struggles:
 
+One issue I ran into was when I implemented a timer - after each question was answered, or when the timer ran down to zero seconds, the question was marked wrong and a new question/timer began. I had reset the number of seconds, but hadn't erased the initial timer, so there were multiple timers running and pulling seconds from the clock. 
