@@ -44,6 +44,9 @@
 @property Flag *flagObject;
 
 @property NSMutableArray *incorrectAnswers;
+@property (weak, nonatomic) IBOutlet UILabel *hiddenLabel;
+
+
 
 @end
 
@@ -52,6 +55,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.hiddenLabel.hidden = YES;
     
     self.incorrectAnswers = [[NSMutableArray alloc] init];
     
