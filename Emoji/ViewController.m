@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *incorrectLabel;
 @property int totalIncorrectAnswers;
+@property (weak, nonatomic) IBOutlet UILabel *streakLabel;
 
 @property int streak;
 
@@ -67,10 +68,13 @@
     self.startButton.hidden = NO;
     self.highScoreLabel.hidden = NO;
     self.medalLabel.hidden = YES;
+    self.streakLabel.hidden = YES;
     
     self.title = @"Flag Quiz";
     
     [self viewHighScore];
+    
+    self.streak = 0;
     
     }
 
@@ -115,6 +119,8 @@
         
         self.streak += 1;
         
+        self.streakLabel.text = [NSString stringWithFormat:@"Streak: %d", self.streak];
+        
         self.totalCorrectAnswers += 1;
         
         [self medalUpdate];
@@ -150,6 +156,10 @@
         
         self.streak = 0;
         
+        self.streakLabel.text = [NSString stringWithFormat:@"Streak: %d", self.streak];
+        
+        [self medalUpdate];
+        
         self.totalIncorrectAnswers += 1;
         
         self.incorrectLabel.text = [NSString stringWithFormat:@"Total Incorrect: %d", self.totalIncorrectAnswers];
@@ -178,6 +188,7 @@
     self.submitButton.hidden = NO;
     self.startButton.hidden = YES;
     self.highScoreLabel.hidden = NO;
+    self.streakLabel.hidden = NO;
     
     self.timerSeconds = 10;
     
@@ -199,9 +210,11 @@
         
         [self.answerTimer invalidate];
         
-        [self setHighScore];
-    
-        [self viewHighScore];
+        self.streak = 0;
+        
+        self.streakLabel.text = [NSString stringWithFormat:@"Streak: %d", self.streak];
+        
+        [self medalUpdate];
     
         self.totalIncorrectAnswers += 1;
     
