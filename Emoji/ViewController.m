@@ -24,7 +24,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *incorrectLabel;
 @property int totalIncorrectAnswers;
 
-@property (weak, nonatomic) IBOutlet UILabel *streakLabel;
 @property int streak;
 
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
@@ -44,7 +43,6 @@
 @property Flag *flagObject;
 
 @property NSMutableArray *incorrectAnswers;
-@property (weak, nonatomic) IBOutlet UILabel *hiddenLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *medalLabel;
 
@@ -65,7 +63,6 @@
     self.timerLabel.hidden = YES;
     self.correctLabel.hidden = YES;
     self.incorrectLabel.hidden = YES;
-    self.streakLabel.hidden = YES;
     self.submitButton.hidden = YES;
     self.startButton.hidden = NO;
     self.highScoreLabel.hidden = NO;
@@ -73,43 +70,9 @@
     
     self.title = @"Flag Quiz";
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults]; //Read High Score
+    [self viewHighScore];
     
-    self.theHighScore = (int)[defaults integerForKey:@"HighScore"];
-    
-    self.highScoreLabel.text = [NSString stringWithFormat:@"Streak Record: %d",self.theHighScore];
-    
-    if (self.streak < 2) {
-        
-        self.medalLabel.hidden = YES;
-        
-    } else if ((self.streak > 2) && (self.theHighScore <4)) {
-        
-        self.medalLabel.hidden = NO;
-        
-        self.medalLabel.text = [NSString stringWithFormat:@"BRONZE"];
-        
-        self.medalLabel.textColor = [UIColor brownColor];
-        
-    }else if ((self.streak > 4) && (self.theHighScore <6)) {
-        
-        self.medalLabel.hidden = NO;
-        
-        self.medalLabel.text = [NSString stringWithFormat:@"SILVER"];
-        
-        self.medalLabel.textColor = [UIColor lightGrayColor];
-        
-    }else if (self.theHighScore > 6) {
-        
-        self.medalLabel.hidden = NO;
-        
-        self.medalLabel.text = [NSString stringWithFormat:@"GOLD"];
-        
-        self.medalLabel.textColor = [UIColor yellowColor];
-        
     }
-
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -153,7 +116,16 @@
         self.streak += 1;
         
         self.totalCorrectAnswers += 1;
-    
+        
+        [self medalUpdate];
+        
+        if (self.streak > self.theHighScore) {
+            
+            [self setHighScore];
+            
+            [self viewHighScore];
+        }
+        
         self.correctLabel.text = [NSString stringWithFormat:@"Total Correct: %d", self.totalCorrectAnswers];
         
         self.answerLabel.text = nil;
@@ -171,19 +143,10 @@
         
         if (self.streak > self.theHighScore) {
             
-            self.defaults = [NSUserDefaults standardUserDefaults]; //Set High Score
+            [self setHighScore];
             
-            [self.defaults setInteger:self.streak forKey:@"HighScore"];
-            
-            [self.defaults synchronize];
-            
+            [self viewHighScore];
         }
-        
-        self.defaults = [NSUserDefaults standardUserDefaults]; //Read High Score
-        
-        self.theHighScore = (int)[self.defaults integerForKey:@"HighScore"];
-        
-        self.highScoreLabel.text = [NSString stringWithFormat:@"Streak Record: %d",self.theHighScore];
         
         self.streak = 0;
         
@@ -236,19 +199,9 @@
         
         [self.answerTimer invalidate];
         
-        self.defaults = [NSUserDefaults standardUserDefaults]; //Set High Score
-        
-        [self.defaults setInteger:self.streak forKey:@"HighScore"];
-        
-        [self.defaults synchronize];
+        [self setHighScore];
     
-        self.defaults = [NSUserDefaults standardUserDefaults]; //Read High Score
-        
-        self.theHighScore = (int)[self.defaults integerForKey:@"HighScore"];
-        
-        self.highScoreLabel.text = [NSString stringWithFormat:@"Streak Record: %d",self.theHighScore];
-        
-        self.streak = 0;
+        [self viewHighScore];
     
         self.totalIncorrectAnswers += 1;
     
@@ -261,8 +214,59 @@
     }
 
 }
-// create a new app - have it ask 5 traveling questions (random questions, 1-5). All 5 questions should have 4 options, with 1 correct answer. WHen they click the button, tell them if they were wrong or right. Store it if it's wrong. Then - have another button that is "Help", which, when clicked, will tell them which question they've gotten wrong. Will need a custom class for each question, will want question to store and present everything, and use an array to store questions. Also - on the top left of screen, have a running percentage of how many questions they've gotten correct.
 
 
+// HIGH SCORE
+- (void)setHighScore {
+    
+    self.defaults = [NSUserDefaults standardUserDefaults];
+    [self.defaults setInteger:self.streak forKey:@"HighScore"];
+    [self.defaults synchronize];
+    
+}
+
+// VIEW HIGH SCORE
+- (void)viewHighScore {
+    
+    self.defaults = [NSUserDefaults standardUserDefaults];
+    self.theHighScore = (int)[self.defaults integerForKey:@"HighScore"];
+    self.highScoreLabel.text = [NSString stringWithFormat:@"Streak Record: %d",self.theHighScore];
+
+}
+
+// MEDAL
+- (void)medalUpdate {
+    
+    if (self.streak < 2) {
+        
+        self.medalLabel.hidden = YES;
+        
+    } else if ((self.streak > 2) && (self.theHighScore <4)) {
+        
+        self.medalLabel.hidden = NO;
+        
+        self.medalLabel.text = [NSString stringWithFormat:@"BRONZE"];
+        
+        self.medalLabel.textColor = [UIColor brownColor];
+        
+    }else if ((self.streak > 4) && (self.theHighScore <6)) {
+        
+        self.medalLabel.hidden = NO;
+        
+        self.medalLabel.text = [NSString stringWithFormat:@"SILVER"];
+        
+        self.medalLabel.textColor = [UIColor lightGrayColor];
+        
+    }else if (self.theHighScore > 6) {
+        
+        self.medalLabel.hidden = NO;
+        
+        self.medalLabel.text = [NSString stringWithFormat:@"GOLD"];
+        
+        self.medalLabel.textColor = [UIColor yellowColor];
+        
+    }
+    
+}
 
 @end
