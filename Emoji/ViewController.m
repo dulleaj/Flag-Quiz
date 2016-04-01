@@ -46,6 +46,7 @@
 @property NSMutableArray *incorrectAnswers;
 @property (weak, nonatomic) IBOutlet UILabel *hiddenLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *medalLabel;
 
 
 @end
@@ -55,8 +56,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
-    self.hiddenLabel.hidden = YES;
+
     
     self.incorrectAnswers = [[NSMutableArray alloc] init];
     
@@ -69,6 +69,7 @@
     self.submitButton.hidden = YES;
     self.startButton.hidden = NO;
     self.highScoreLabel.hidden = NO;
+    self.medalLabel.hidden = YES;
     
     self.title = @"Flag Quiz";
     
@@ -77,6 +78,36 @@
     self.theHighScore = (int)[defaults integerForKey:@"HighScore"];
     
     self.highScoreLabel.text = [NSString stringWithFormat:@"Streak Record: %d",self.theHighScore];
+    
+    if (self.streak < 2) {
+        
+        self.medalLabel.hidden = YES;
+        
+    } else if ((self.streak > 2) && (self.theHighScore <4)) {
+        
+        self.medalLabel.hidden = NO;
+        
+        self.medalLabel.text = [NSString stringWithFormat:@"BRONZE"];
+        
+        self.medalLabel.textColor = [UIColor brownColor];
+        
+    }else if ((self.streak > 4) && (self.theHighScore <6)) {
+        
+        self.medalLabel.hidden = NO;
+        
+        self.medalLabel.text = [NSString stringWithFormat:@"SILVER"];
+        
+        self.medalLabel.textColor = [UIColor lightGrayColor];
+        
+    }else if (self.theHighScore > 6) {
+        
+        self.medalLabel.hidden = NO;
+        
+        self.medalLabel.text = [NSString stringWithFormat:@"GOLD"];
+        
+        self.medalLabel.textColor = [UIColor yellowColor];
+        
+    }
 
 }
 
@@ -86,6 +117,8 @@
 }
 
 - (IBAction) startButtonWasTapped:(id)sender {
+    
+    [self.answerLabel becomeFirstResponder];
 
     [self askQuestion];
     
